@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
       sessionStorage.setItem("loginStatus", "true");
       sessionStorage.setItem("userType", data.userDetails.userType);
       sessionStorage.setItem("name", data.userDetails.fullName);
+      sessionStorage.setItem("authToken", data.userDetails.authToken);
+      sessionStorage.setItem("userId", data.userDetails.userId);
       this.router.navigate(['welcome']);
     });
   }

@@ -12,21 +12,16 @@
         <h1>Citizen Portal Service</h1>
       </a>
     </div>
-    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
-        <ul>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed" *ngFor="let urlData of urlList">
+
+      <li nz-submenu nzOpen nzTitle="{{urlData.urlGroupName}}" nzIcon="dashboard">
+        <ul *ngFor="let url of urlData.urlList">
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/welcome">Welcome</a>
+            <a routerLink="{{url.routerLink}}">{{url.urlName}}</a>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a>Citizen Registration</a>
-          </li>
-        </ul>
-      </li>
+
     </ul>
   </nz-sider>
   <nz-layout>
