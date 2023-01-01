@@ -10,8 +10,8 @@
 
 <div class="card" style="margin-top: 5px;">
   <div class="card-header">
-    <button class="btn btn-primary" id="addCountry" (click)="addCountry()">Add</button>
-    <button class="btn btn-success" id="viewCountry" (click)="viewCountry()" style="margin-left: 1rem;">View</button>
+    <button class="btn btn-primary" id="addCountry" (click)="addCountry()" style="width: 6rem;">Add</button>
+    <button class="btn btn-success" id="viewCountry" (click)="viewCountry()" style="margin-left: 8px; width: 6rem;">View</button>
   </div>
 
   <div class="card-body">
@@ -83,15 +83,22 @@
           <div class="row">
             <div class="col-sm">
               <div class="col-md-12">
-                <table class="table table-striped table-hover">
+                <table class="table table-bordered">
                   <thead>
                   <tr>
-                    <th scope="col">Country Name</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
+                    <th style="font-weight: bold">Country Name</th>
+                    <th style="font-weight: bold">Status</th>
+                    <th style="font-weight: bold">Action</th>
                   </tr>
                   </thead>
                   <tbody id="countryTable">
+                  <tr *ngFor="let country of countryList">
+                    <td>{{country.countryName}}</td>
+                    <td>{{country.active}}</td>
+                    <td>
+                      <button class="btn btn-primary">Edit</button>
+                      <button class="btn btn-danger">Delete</button>
+                    </td>
                   </tbody>
                 </table>
               </div>

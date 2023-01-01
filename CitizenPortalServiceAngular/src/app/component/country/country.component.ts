@@ -16,6 +16,7 @@ export class CountryComponent implements OnInit {
 
   ngOnInit(): void {
     this.addCountry();
+    this.getCountryList();
   }
 
   addCountry() {
@@ -30,11 +31,12 @@ export class CountryComponent implements OnInit {
 
   getCountryList() {
     this.tokenService.generateToken().subscribe(data => {
-      console.log(data);
       if (data.statusCode == 200 && data.status == "Success") {
-        this.countryList = this.mainService.getCountryList(data.token, sessionStorage.getItem("authToken"));
-        console.log("Country List");
-        console.log(this.countryList);
+        this.mainService.getCountryList(data.token, sessionStorage.getItem("authToken")).subscribe(data => {
+          if (data.statusCode == 200 && data.status == "Success") {
+            this.countryList = data.data;
+          }
+        });
       }
     });
   }
