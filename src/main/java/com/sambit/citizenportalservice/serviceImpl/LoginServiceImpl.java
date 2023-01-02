@@ -47,12 +47,13 @@ public class LoginServiceImpl implements LoginService {
             if (authentication.isAuthenticated()) {
                 User user = userRepository.findByUserName(userName);
                 return Map.of("fullName", user.getFullName(),
+                        "userId", user.getUserId(),
                         "mobile", user.getMobile(),
                         "email", user.getEmail(),
                         "dob", user.getDob(),
                         "address", user.getAddress(),
                         "userType", user.getRole().getRoleName(),
-                        "authToken", tokenService.generateToken(authentication.getName())
+                        "authToken", "Bearer " + tokenService.generateToken(authentication.getName())
                 );
             } else {
                 throw new UsernameNotFoundException("Invalid Credentials!");

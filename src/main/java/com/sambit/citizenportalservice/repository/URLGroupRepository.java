@@ -1,4 +1,10 @@
 package com.sambit.citizenportalservice.repository;
 
-public interface URLGroupRepository extends org.springframework.data.jpa.repository.JpaRepository<com.sambit.citizenportalservice.model.URLGroup, long> {
+import com.sambit.citizenportalservice.model.URLGroup;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
+public interface URLGroupRepository extends JpaRepository<URLGroup, Long> {
 }

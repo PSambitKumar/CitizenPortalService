@@ -25,16 +25,14 @@ public class TokenController {
     private TokenService tokenService;
 
     @GetMapping(value = "/generate")
-    public ResponseEntity<?> generateRandomToken(@RequestBody String userName) {
+    public ResponseEntity<?> generateRandomToken(@RequestParam(value = "userName") String userName) {
         System.out.println("Inside Generate Random Token Method.");
-        JSONObject jsonObject;
         Map<String, Object> response = new LinkedHashMap<>();
         try {
-            jsonObject = new JSONObject(userName);
             response.put("statusCode", HttpStatus.OK.value());
             response.put("status", "Success");
             response.put("message", "Token Generated Successfully.");
-            response.put("token", tokenService.generateToken(jsonObject.getString("userName")));
+            response.put("token", tokenService.generateToken(userName));
         } catch (Exception e) {
             response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.put("status", "Failure");
