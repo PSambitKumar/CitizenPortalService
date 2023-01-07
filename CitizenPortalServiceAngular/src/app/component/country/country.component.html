@@ -19,7 +19,7 @@
     <div id="add">
       <fieldset style="margin: 2rem;" class="form-group border p-3">
         <legend class="w-auto px-2" style="margin-bottom: 1rem;">Country Details</legend>
-        <form style="margin-top: 2rem; width: 99%;" id="farmerForm">
+        <form style="margin-top: 2rem; width: 99%;" id="countryForm" (ngSubmit)="addCountryData()">
           <div class="container">
 
             <div class="row farmerDetails">
@@ -34,10 +34,18 @@
 
               <div class="col-sm">
                 <div class="col-md-12">
+                  <label for="countryName" class="form-label">Country Code</label>
+                  <input  type="text" class="form-control" id="countryCode" name="countryCode" placeholder="Enter Country Code">
+                  <div id="countryCodeAlert" class="custom-alert"></div>
+                </div>
+              </div>
+
+              <div class="col-sm">
+                <div class="col-md-12">
                   <label for="status" class="form-label">Status</label>
                   <select id="status" name="status" class="form-control">
-                    <option value="1">Active</option>
-                    <option value="0">Inactive</option>
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
                   </select>
                   <div id="statusAlert" class="custom-alert"></div>
                 </div>
@@ -83,24 +91,30 @@
           <div class="row">
             <div class="col-sm">
               <div class="col-md-12">
-                <table class="table table-bordered">
-                  <thead>
-                  <tr>
-                    <th style="font-weight: bold">Country Name</th>
-                    <th style="font-weight: bold">Status</th>
-                    <th style="font-weight: bold">Action</th>
-                  </tr>
-                  </thead>
-                  <tbody id="countryTable">
-                  <tr *ngFor="let country of countryList">
-                    <td>{{country.countryName}}</td>
-                    <td>{{country.active}}</td>
-                    <td>
-                      <button class="btn btn-primary">Edit</button>
-                      <button class="btn btn-danger">Delete</button>
-                    </td>
-                  </tbody>
-                </table>
+                <div id="viewTab">
+
+                  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered">
+                    <thead style="background: #DDDDDD; color: black; font-weight: bolder; font-size: 18px">
+                    <tr>
+                      <th>Sl. No</th>
+                      <th>Country Name</th>
+                      <th>Status</th>
+                      <th width="20%">Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr *ngFor="let country of countryList; let i = index" style="font-size:15px">
+                      <td>{{i + 1}}</td>
+                      <td>{{country.countryName}}</td>
+                      <td>{{country.active}}</td>
+                      <td><button type="button" class="btn btn-primary custom-width"><span class="fa fa-pencil"></span></button>&nbsp;
+                        <button type="button" class="btn btn-danger custom-width"><span class="fa fa-trash"></span></button></td>
+                    </tr>
+                    </tbody>
+                  </table>
+
+                </div>
               </div>
             </div>
           </div>

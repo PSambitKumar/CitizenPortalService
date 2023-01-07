@@ -15,6 +15,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import {LoginComponent} from "./component/login/login.component";
 import {CountryComponent} from "./component/country/country.component";
+import {DataTablesModule} from "angular-datatables";
 
 registerLocaleData(en);
 
@@ -32,7 +33,8 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     IconsProviderModule,
     NzLayoutModule,
-    NzMenuModule
+    NzMenuModule,
+    DataTablesModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/main")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class MainController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class MainController {
     public ResponseEntity<?> getURL(@RequestParam(value = "userId") String userId) {
         System.out.println("Inside Get URL Method.");
         Map<String, Object> response = new LinkedHashMap<>();
-        List<Map<String, Object>> urlList = null;
+        List<Map<String, Object>> urlList;
         try {
             urlList = mainService.getURL(userId);
             if (urlList != null && urlList.size() > 0) {
@@ -67,6 +67,39 @@ public class MainController {
                 response.put("status", "Failure");
                 response.put("message", "Country List Not Found.");
             }
+        } catch (Exception e) {
+            response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.put("status", "Failure");
+            response.put("message", e.getMessage());
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/addCountryData")
+    public ResponseEntity<?> addCountryData(@RequestBody String body) {
+        System.out.println("Inside Add Country Data Method.");
+        Map<String, Object> response = new LinkedHashMap<>();
+        Country country;
+        try {
+            System.out.println("Body : " + body);
+            if (!mainService.isCountryExist(body)) {
+                country = mainService.addCountryData(body);
+                if (country.getCountryId() != null) {
+                    response.put("statusCode", HttpStatus.OK.value());
+                    response.put("status", "Success");
+                    response.put("message", country.getCountryName() + " Added Successfully.");
+                    response.put("data", country);
+                } else {
+                    response.put("statusCode", HttpStatus.NOT_FOUND.value());
+                    response.put("status", "Failure");
+                    response.put("message", "Country Data Not Added.");
+                }
+            } else {
+                response.put("statusCode", HttpStatus.NOT_FOUND.value());
+                response.put("status", "Failure");
+                response.put("message", "Country Already Exist.");
+            }
+
         } catch (Exception e) {
             response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.put("status", "Failure");

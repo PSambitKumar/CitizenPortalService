@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {urlConfig} from "../url/url.config";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,6 @@ export class LoginService {
         "password": password
       }
     };
-    return this.http.get<any>(this.baseURL + '/api/login/user', options);
+    return this.http.get<any>(this.baseURL + urlConfig.login, options);
   }
 }

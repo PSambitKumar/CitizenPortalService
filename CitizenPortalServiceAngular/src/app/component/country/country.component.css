@@ -1,1 +1,9 @@
 @import "bootstrap";
+@import "font-awesome/css/font-awesome.css";
+
+
+td {
+  font-size: 16px;
+  font-family: "Segoe UI Semibold";
+  font-weight: bold;
+}

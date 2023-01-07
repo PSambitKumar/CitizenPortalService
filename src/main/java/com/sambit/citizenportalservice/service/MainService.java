@@ -1,6 +1,7 @@
 package com.sambit.citizenportalservice.service;
 
 import com.sambit.citizenportalservice.model.Country;
+import org.json.JSONException;
 
 import java.util.List;
 import java.util.Map;
@@ -13,4 +14,6 @@ import java.util.Map;
 public interface MainService {
     List<Map<String, Object>> getURL(String userId);
     List<Country> getCountryList();
+    Boolean isCountryExist(String body) throws JSONException;
+    Country addCountryData(String body);
 }

@@ -2,6 +2,7 @@ package com.sambit.citizenportalservice.repository;
 
 import com.sambit.citizenportalservice.model.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * @Project : CitizenPortalService
@@ -9,4 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Created On : 02/01/2023 - 12:05 AM
  */
 public interface CountryRepository extends JpaRepository<Country, Long> {
+    Country findByCountryName(String countryName);
 }

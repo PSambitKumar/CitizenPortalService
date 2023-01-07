@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {urlConfig} from "../url/url.config";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,6 @@ export class TokenService {
         "userName": "admin"
       }
     };
-    return this.http.get<any>(this.baseUrl + '/api/token/generate', options);
+    return this.http.get<any>(this.baseUrl + urlConfig.generateToken, options);
   }
 }

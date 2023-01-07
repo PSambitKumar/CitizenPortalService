@@ -20,7 +20,8 @@ export class AppComponent {
 
   constructor(private router : Router, private mainService : MainService, private tokenService : TokenService) {
   }
-  ngOnInit() {    this.loginStatus = sessionStorage.getItem("loginStatus");
+  ngOnInit() {
+    this.loginStatus = sessionStorage.getItem("loginStatus");
     this.userType = sessionStorage.getItem("userType");
     this.fullName = sessionStorage.getItem("name");
     this.authToken = sessionStorage.getItem("authToken");
@@ -48,6 +49,8 @@ export class AppComponent {
 
   logoutUser() {
     sessionStorage.clear();
-    this.router.navigate(['']);
+    this.router.navigate(['']).then(() => {
+      window.location.reload();
+    });
   }
 }

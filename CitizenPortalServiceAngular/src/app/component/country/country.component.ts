@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import {MainService} from "../../service/main.service";
 import {TokenService} from "../../service/token.service";
+import {Subject} from "rxjs";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-country',
@@ -11,12 +13,18 @@ import {TokenService} from "../../service/token.service";
 export class CountryComponent implements OnInit {
 
   countryList : any = [];
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private mainService : MainService, private tokenService : TokenService) { }
+  constructor(private mainService : MainService) { }
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      paging: true,
+      searching: true,
+    }
     this.addCountry();
-    this.getCountryList();
   }
 
   addCountry() {
@@ -27,15 +35,40 @@ export class CountryComponent implements OnInit {
   viewCountry() {
     $('#add').hide();
     $('#view').show();
+    this.getCountryList();
   }
 
   getCountryList() {
-    this.tokenService.generateToken().subscribe(data => {
+    this.mainService.getCountryList(sessionStorage.getItem("apiToken"), sessionStorage.getItem("authToken")).subscribe(data => {
       if (data.statusCode == 200 && data.status == "Success") {
-        this.mainService.getCountryList(data.token, sessionStorage.getItem("authToken")).subscribe(data => {
-          if (data.statusCode == 200 && data.status == "Success") {
-            this.countryList = data.data;
+        this.countryList = data.data;
+        this.dtTrigger.next(null);
+      }
+    });
+  }
+
+  addCountryData() {
+    let countryName = $('#countryName').val();
+    let countryCode = $('#countryCode').val();
+    let status = $('#status').val();
+    this.mainService.addCountryData(countryName, countryCode, status, sessionStorage.getItem("apiToken"), sessionStorage.getItem("authToken")).subscribe(data => {
+      console.log(data);
+      if (data.statusCode == 200 && data.status == "Success") {
+        Swal.fire({
+          title: 'Success',
+          text: data.message,
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $('#countryForm').trigger("reset");
           }
+        });
+      } else if (data.statusCode == 404 && data.status == "Failure") {
+        Swal.fire({
+          title: 'Error',
+          text: data.message,
+          icon: 'error'
         });
       }
     });
