@@ -26,6 +26,24 @@ public class Country {
     private String countryName;
     @Column(name = "countryCode")
     private String countryCode;
+    @Column(name = "isoFullName")
+    private String isoFullName;
+    @Column(name = "capital")
+    private String capital;
+    @Column(name = "currencyName")
+    private String currencyName;
+    @Column(name = "currencyCode")
+    private String currencyCode;
+    @Column(name = "phoneCode")
+    private String phoneCode;
+    @Column(name = "pupulation")
+    private String population;
+    @Column(name = "populationPercentage")
+    private String populationPercentage;
+    @Column(name = "nativeLanguage")
+    private String nativeLanguage;
+    @Column(name = "region")
+    private String region;
     @Column(name = "isActive")
     private boolean isActive;
 }
