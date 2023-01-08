@@ -98,8 +98,11 @@
                     <tr>
                       <th>Sl. No</th>
                       <th>Country Name</th>
+                      <th>Country Code</th>
+                      <th>Currency Name</th>
+                      <th>ISO Full Name</th>
                       <th>Status</th>
-                      <th width="20%">Action</th>
+                      <th width="10%">Action</th>
                     </tr>
                     </thead>
 
@@ -107,6 +110,9 @@
                     <tr *ngFor="let country of countryList; let i = index" style="font-size:15px">
                       <td>{{i + 1}}</td>
                       <td>{{country.countryName}}</td>
+                      <td>{{country.countryCode}}</td>
+                      <td>{{country.currencyName}}</td>
+                      <td>{{country.isoFullName}}</td>
                       <td>{{country.active}}</td>
                       <td><button type="button" class="btn btn-primary custom-width"><span class="fa fa-pencil"></span></button>&nbsp;
                         <button type="button" class="btn btn-danger custom-width"><span class="fa fa-trash"></span></button></td>
