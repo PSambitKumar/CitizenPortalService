@@ -1,23 +1,9 @@
 package com.sambit.citizenportalservice.controller;
 
-import com.sambit.citizenportalservice.model.Country;
-import com.sambit.citizenportalservice.repository.CountryRepository;
 import com.sambit.citizenportalservice.service.SchedulerService;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.Resource;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * @Project : CitizenPortalService
@@ -48,6 +34,16 @@ public class SchedulerController {
         System.out.println("Inside Fetch Country Details By Country Name Method.");
         try {
             schedulerService.fetchCountryDetailsByCountryNameFromAPINinjas();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Scheduled(cron = "0 4 1 * * ?")
+    public void fetchStateListByCountryNameFromUniversalTutorial(){
+        System.out.println("Inside Fetch State List By Country Name Method.");
+        try {
+          schedulerService.fetchStateListByCountryNameFromUniversalTutorial();
         } catch (Exception e) {
             e.printStackTrace();
         }

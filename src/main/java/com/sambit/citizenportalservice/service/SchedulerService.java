@@ -7,6 +7,7 @@ package com.sambit.citizenportalservice.service;
  */
 public interface SchedulerService {
 
-    public void fetchCountryDetailsByCountryCodeFromBigDataCloud();
-    public void fetchCountryDetailsByCountryNameFromAPINinjas();
+    void fetchCountryDetailsByCountryCodeFromBigDataCloud();
+    void fetchCountryDetailsByCountryNameFromAPINinjas();
+    void fetchStateListByCountryNameFromUniversalTutorial();
 }

@@ -16,6 +16,8 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import {LoginComponent} from "./component/login/login.component";
 import {CountryComponent} from "./component/country/country.component";
 import {DataTablesModule} from "angular-datatables";
+import {StateComponent} from "./component/state/state.component";
+import {DistrictComponent} from "./component/district/district.component";
 
 registerLocaleData(en);
 
@@ -23,7 +25,9 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     LoginComponent,
-    CountryComponent
+    CountryComponent,
+    StateComponent,
+    DistrictComponent
   ],
   imports: [
     BrowserModule,

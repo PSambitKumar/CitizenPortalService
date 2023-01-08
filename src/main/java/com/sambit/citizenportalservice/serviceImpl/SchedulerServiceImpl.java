@@ -3,6 +3,7 @@ package com.sambit.citizenportalservice.serviceImpl;
 import com.sambit.citizenportalservice.model.Country;
 import com.sambit.citizenportalservice.repository.CountryRepository;
 import com.sambit.citizenportalservice.service.SchedulerService;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -80,7 +81,7 @@ public class SchedulerServiceImpl implements SchedulerService {
             countryList = countryRepository.findAll();
             countryList.forEach(country -> {
                 restTemplate.set(new RestTemplate());
-                url.set(resourceBundle.getString("API-Ninjas.countryInfo.link") +
+                url.set(resourceBundle.getString("API.Ninjas.countryInfo.link") +
                         "?name=" + country.getCountryName()
                 );
                 HttpHeaders headers = new HttpHeaders();
@@ -98,6 +99,44 @@ public class SchedulerServiceImpl implements SchedulerService {
                 url.set("");
             });
             countryRepository.saveAll(updatedCountryList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void fetchStateListByCountryNameFromUniversalTutorial() {
+        String authToken, url, url1;
+        RestTemplate restTemplate, restTemplate1;
+        HttpHeaders headers, headers1;
+        HttpEntity<String> header, header1;
+        Map<?, ?> response;
+        List<?> response1;
+        try {
+            url = resourceBundle.getString("universal.tutorial.generateToken.link");
+            restTemplate = new RestTemplate();
+            headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+            headers.set("Accept", "application/json");
+            headers.set("api-token", resourceBundle.getString("universal.tutorial.apiToken"));
+            headers.set("user-email", resourceBundle.getString("universal.tutorial.registerEmail"));
+            header = new HttpEntity<>("parameters", headers);
+            response = restTemplate.exchange(url, HttpMethod.GET, header, Map.class).getBody();
+            if (response != null) {
+                authToken = (String) response.get("auth_token");
+                System.out.println("AuthToken : " + authToken);
+                url1 = resourceBundle.getString("universal.tutorial.countryStateList.link") + "INDIA";
+                restTemplate1 = new RestTemplate();
+                headers1 = new HttpHeaders();
+                headers1.set("Content-Type", "application/json");
+                headers1.set("Accept", "application/json");
+                headers1.set("Authorization", "Bearer " + authToken);
+                header1 = new HttpEntity<>("parameters", headers1);
+                response1 = restTemplate1.exchange(url1, HttpMethod.GET, header1, List.class).getBody();
+                if (response1 != null && response1.size() > 0) {
+                    System.out.println("Response1 : " + response1);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
