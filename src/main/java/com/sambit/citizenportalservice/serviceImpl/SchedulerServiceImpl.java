@@ -1,9 +1,10 @@
 package com.sambit.citizenportalservice.serviceImpl;
 
 import com.sambit.citizenportalservice.model.Country;
+import com.sambit.citizenportalservice.model.State;
 import com.sambit.citizenportalservice.repository.CountryRepository;
+import com.sambit.citizenportalservice.repository.StateRepository;
 import com.sambit.citizenportalservice.service.SchedulerService;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +30,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Autowired
     private CountryRepository countryRepository;
+
+    @Autowired
+    private StateRepository stateRepository;
 
     @Override
     public void fetchCountryDetailsByCountryCodeFromBigDataCloud() {
@@ -106,12 +110,15 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void fetchStateListByCountryNameFromUniversalTutorial() {
-        String authToken, url, url1;
+        String authToken;
+        String url, url1;
+        List<Country> countryList; List<?> response1 ;
         RestTemplate restTemplate, restTemplate1;
         HttpHeaders headers, headers1;
         HttpEntity<String> header, header1;
         Map<?, ?> response;
-        List<?> response1;
+        List<State> stateList;
+        State state;
         try {
             url = resourceBundle.getString("universal.tutorial.generateToken.link");
             restTemplate = new RestTemplate();
@@ -125,16 +132,35 @@ public class SchedulerServiceImpl implements SchedulerService {
             if (response != null) {
                 authToken = (String) response.get("auth_token");
                 System.out.println("AuthToken : " + authToken);
-                url1 = resourceBundle.getString("universal.tutorial.countryStateList.link") + "INDIA";
-                restTemplate1 = new RestTemplate();
-                headers1 = new HttpHeaders();
-                headers1.set("Content-Type", "application/json");
-                headers1.set("Accept", "application/json");
-                headers1.set("Authorization", "Bearer " + authToken);
-                header1 = new HttpEntity<>("parameters", headers1);
-                response1 = restTemplate1.exchange(url1, HttpMethod.GET, header1, List.class).getBody();
-                if (response1 != null && response1.size() > 0) {
-                    System.out.println("Response1 : " + response1);
+                countryList = countryRepository.findAll();
+                if (countryList.size() > 0) {
+                    stateList = new ArrayList<>();
+                    for (Country country : countryList) {
+                        if (country.getCountryName().equalsIgnoreCase("Guinea‐Bissau") ||
+                                country.getCountryName().equalsIgnoreCase("Timor‐Leste"))
+                            continue;
+                        url1 = (resourceBundle.getString("universal.tutorial.countryStateList.link") + country.getCountryName());
+                        restTemplate1 = new RestTemplate();
+                        headers1 = new HttpHeaders();
+                        headers1.set("Content-Type", "application/json");
+                        headers1.set("Accept", "application/json");
+                        headers1.set("Authorization", "Bearer " + authToken);
+                        header1 = new HttpEntity<>("parameters", headers1);
+                        response1 = restTemplate1.exchange(url1, HttpMethod.GET, header1, List.class).getBody();
+                        if (response1 != null && response1.size() > 0) {
+                            System.out.println("URL : " + url1);
+                            System.out.println("Response : " + response1);
+                            for (Object stateObj : response1) {
+                                state = new State();
+                                System.out.println("State Name : " + ((Map<?, ?>) stateObj).get("state_name"));
+                                state.setStateName((String) ((Map<?, ?>) stateObj).get("state_name"));
+                                state.setCountry(country);
+                                stateList.add(state);
+                            }
+                        }
+                    }
+                    stateList.forEach(System.out::println);
+                    stateRepository.saveAll(stateList);
                 }
             }
         } catch (Exception e) {

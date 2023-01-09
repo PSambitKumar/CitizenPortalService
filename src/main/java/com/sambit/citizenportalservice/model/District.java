@@ -24,7 +24,7 @@ public class District {
     private Long districtId;
     @Column(name = "districtName")
     private String districtName;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "stateId")
     private State state;
     @Column(name = "status")

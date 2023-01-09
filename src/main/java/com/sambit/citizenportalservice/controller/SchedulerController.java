@@ -1,6 +1,8 @@
 package com.sambit.citizenportalservice.controller;
 
 import com.sambit.citizenportalservice.service.SchedulerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,8 @@ public class SchedulerController {
 
     @Autowired
     private SchedulerService schedulerService;
+
+    private static final Logger logger = LoggerFactory.getLogger(SchedulerController.class);
 
 //    Run Every Day at 01:35 PM
     @Scheduled(cron = "0 45 13 * * ?")
@@ -39,7 +43,7 @@ public class SchedulerController {
         }
     }
 
-    @Scheduled(cron = "0 4 1 * * ?")
+    @Scheduled(cron = "0 33 0 * * ?")
     public void fetchStateListByCountryNameFromUniversalTutorial(){
         System.out.println("Inside Fetch State List By Country Name Method.");
         try {

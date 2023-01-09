@@ -24,22 +24,9 @@ public class State {
     private Long stateId;
     @Column(name = "stateName")
     private String StateName;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "countryId")
     private Country country;
     @Column(name = "isActive")
     private boolean isActive;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        State state = (State) o;
-        return stateId != null && Objects.equals(stateId, state.stateId);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
