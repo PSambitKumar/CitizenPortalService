@@ -89,4 +89,9 @@ public class MainServiceImpl implements MainService {
         }
         return country;
     }
+
+    @Override
+    public Country getCountryById(Long countryId) {
+        return countryRepository.findByCountryId(countryId);
+    }
 }

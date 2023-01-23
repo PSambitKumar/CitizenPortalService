@@ -15,6 +15,7 @@ export class CountryComponent implements OnInit {
   countryList : any = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  editCountryId: any;
 
   constructor(private mainService : MainService, private validateService : ValidationService) { }
 
@@ -83,4 +84,16 @@ export class CountryComponent implements OnInit {
     }
   }
 
+  editCountry(countryId: any) {
+    alert("Country Id : " + countryId);
+    this.editCountryId = countryId;
+    this.addCountry();
+    this.mainService.getCountryById(countryId, sessionStorage.getItem("apiToken"), sessionStorage.getItem("authToken")).subscribe(data => {
+      if (data.statusCode == 200 && data.status == "Success") {
+        $('#countryName').val(data.data.countryName);
+        $('#countryCode').val(data.data.countryCode);
+        console.log(data.data)
+      }
+    });
+  }
 }

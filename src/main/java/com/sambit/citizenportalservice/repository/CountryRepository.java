@@ -14,4 +14,5 @@ import java.util.ListIterator;
  */
 public interface CountryRepository extends JpaRepository<Country, Long> {
     Country findByCountryName(String countryName);
+    Country findByCountryId(Long countryId);
 }

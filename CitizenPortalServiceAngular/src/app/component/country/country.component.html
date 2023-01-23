@@ -114,7 +114,7 @@
                       <td>{{country.currencyName}}</td>
                       <td>{{country.isoFullName}}</td>
                       <td>{{country.active}}</td>
-                      <td><button type="button" class="btn btn-primary custom-width"><span class="fa fa-pencil"></span></button>&nbsp;
+                      <td><button type="button" class="btn btn-primary custom-width" (click)="editCountry(country.countryId)"><span class="fa fa-pencil"></span></button>&nbsp;
                         <button type="button" class="btn btn-danger custom-width"><span class="fa fa-trash"></span></button></td>
                     </tr>
                     </tbody>

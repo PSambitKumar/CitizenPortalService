@@ -71,4 +71,20 @@ export class MainService {
     }
     return this.http.post<any>(this.baseUrl + urlConfig.addCountryData, body,  options);
   }
+
+  getCountryById(countryId : any, apiToken : any, authToken : any) : Observable<any> {
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        "Authorization": authToken,
+        "Token": apiToken,
+      });
+
+      let options = {
+        headers: headers,
+        params: {
+          "countryId": countryId
+        }
+      }
+      return this.http.get<any>(this.baseUrl + urlConfig.getCountryById, options);
+    }
 }

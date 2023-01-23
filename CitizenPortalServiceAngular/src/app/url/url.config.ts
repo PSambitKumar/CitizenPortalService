@@ -4,4 +4,5 @@ export const urlConfig = {
   login : '/api/login/user',
   getCountryList : '/api/main/getCountryList',
   addCountryData : '/api/main/addCountryData',
+  getCountryById : '/api/main/getCountryById',
 }

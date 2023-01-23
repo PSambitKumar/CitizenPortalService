@@ -16,4 +16,5 @@ public interface MainService {
     List<Country> getCountryList();
     Boolean isCountryExist(String body) throws JSONException;
     Country addCountryData(String body);
+    Country getCountryById(Long countryId);
 }
