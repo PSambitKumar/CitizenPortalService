@@ -1,21 +1,22 @@
 package com.sambit.citizenportalservice.serviceImpl;
 
 import com.sambit.citizenportalservice.model.Country;
+import com.sambit.citizenportalservice.model.District;
 import com.sambit.citizenportalservice.model.State;
 import com.sambit.citizenportalservice.repository.CountryRepository;
 import com.sambit.citizenportalservice.repository.StateRepository;
 import com.sambit.citizenportalservice.service.SchedulerService;
+import io.jsonwebtoken.Header;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -165,6 +166,57 @@ public class SchedulerServiceImpl implements SchedulerService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void fetchDistrictDataListByStateNameFromUniversalTutorial() {
+        String authToken;
+        String url;
+        RestTemplate restTemplate;
+        HttpHeaders headers;
+        HttpEntity<String> header;
+        Map<?, ?> response;
+        try {
+            url = resourceBundle.getString("universal.tutorial.generateToken.link");
+            restTemplate = new RestTemplate();
+            headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+            headers.set("Accept", "application/json");
+            headers.set("api-token", resourceBundle.getString("universal.tutorial.apiToken"));
+            headers.set("user-email", resourceBundle.getString("universal.tutorial.registerEmail"));
+            header = new HttpEntity<>("parameters", headers);
+            response = restTemplate.exchange(url, HttpMethod.GET, header, Map.class).getBody();
+            if (response != null) {
+                authToken = (String) response.get("auth_token");
+                System.out.println("AuthToken : " + authToken);
+                List<Object[]> stateList = stateRepository.findAllStateName();
+                stateList.forEach(state -> {
+                    String url1 = (resourceBundle.getString("universal.tutorial.countryStateCityList.link") + state[0]);
+                    HttpHeaders headers1 = new HttpHeaders();
+                    headers1 = new HttpHeaders();
+                    headers1.set("Content-Type", "application/json");
+                    headers1.set("Accept", "application/json");
+                    headers1.set("Authorization", "Bearer " + authToken);
+
+                    HttpEntity<String> header1 = new HttpEntity<>("parameters", headers1);
+                    List<?> response1 = new RestTemplate().exchange(url1, HttpMethod.GET, header1, List.class).getBody();
+
+                    if (response1 != null && response1.size() > 0) {
+                        System.out.println("Response : " + response1);
+                        for (Object cityObject : response1) {
+                            System.out.println(((Map<?, ?>) cityObject).get("city_name"));
+                            District district = new District();
+                            State state1 = stateRepository.findStateByStateId(Long.parseLong((String) state[1]));
+                            System.out.println("Sate : " + state1);
+                            district.setDistrictName((String) ((Map<?, ?>) cityObject).get("city_name"));
+                            district.setStatus(true);
+                        }
+                    }
+                });
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

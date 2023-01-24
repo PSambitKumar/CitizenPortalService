@@ -10,4 +10,5 @@ public interface SchedulerService {
     void fetchCountryDetailsByCountryCodeFromBigDataCloud();
     void fetchCountryDetailsByCountryNameFromAPINinjas();
     void fetchStateListByCountryNameFromUniversalTutorial();
+    void fetchDistrictDataListByStateNameFromUniversalTutorial();
 }

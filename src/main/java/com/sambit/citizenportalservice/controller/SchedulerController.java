@@ -22,7 +22,8 @@ public class SchedulerController {
     private static final Logger logger = LoggerFactory.getLogger(SchedulerController.class);
 
 //    Run Every Day at 01:35 PM
-    @Scheduled(cron = "0 45 13 * * ?")
+//    @Scheduled(cron = "0 45 13 * * ?")
+    @Scheduled(cron = "0 0 0 1 1 ?")
     public void fetchCountryDetailsByCountryCode(){
         System.out.println("Inside Fetch Country Details By Country Code Method.");
         try {
@@ -33,7 +34,8 @@ public class SchedulerController {
     }
 
 //    Run Every Day at 04:05 PM
-    @Scheduled(cron = "0 5 16 * * ?")
+//    @Scheduled(cron = "0 5 16 * * ?")
+    @Scheduled(cron = "0 0 0 1 1 ?")
     public void fetchCountryDetailsByCountryNameFromAPINinjas() {
         System.out.println("Inside Fetch Country Details By Country Name Method.");
         try {
@@ -43,11 +45,23 @@ public class SchedulerController {
         }
     }
 
-    @Scheduled(cron = "0 33 0 * * ?")
+//    @Scheduled(cron = "0 33 0 * * ?")
+    @Scheduled(cron = "0 0 0 1 1 ?")
     public void fetchStateListByCountryNameFromUniversalTutorial(){
         System.out.println("Inside Fetch State List By Country Name Method.");
         try {
           schedulerService.fetchStateListByCountryNameFromUniversalTutorial();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Scheduled(cron = "0 9 17 * * ?")
+    public void fetchDistrictDataListByStateNameFromUniversalTutorial(){
+        System.out.println("Inside Fetch District Data List By State Name Method.");
+        try {
+            schedulerService.fetchDistrictDataListByStateNameFromUniversalTutorial();
         } catch (Exception e) {
             e.printStackTrace();
         }

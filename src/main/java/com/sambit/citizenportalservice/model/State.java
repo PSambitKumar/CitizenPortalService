@@ -13,8 +13,8 @@ import java.util.Objects;
  */
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
+@ToString
 @Entity
 @Table(name = "state")
 public class State {
@@ -26,6 +26,7 @@ public class State {
     private String StateName;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "countryId")
+    @ToString.Exclude
     private Country country;
     @Column(name = "isActive")
     private boolean isActive;
