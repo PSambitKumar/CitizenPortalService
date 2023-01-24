@@ -87,4 +87,20 @@ export class MainService {
       }
       return this.http.get<any>(this.baseUrl + urlConfig.getCountryById, options);
     }
+
+  deleteCountryById(countryId : any, apiToken : any, authToken : any) : Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    let options = {
+      headers: headers,
+      params: {
+        "countryId": countryId,
+        "apiToken": apiToken,
+        "authToken": authToken
+      }
+    }
+    return this.http.delete<any>(this.baseUrl + urlConfig.deleteCountryById, options);
+  }
 }

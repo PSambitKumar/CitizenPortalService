@@ -5,4 +5,5 @@ export const urlConfig = {
   getCountryList : '/api/main/getCountryList',
   addCountryData : '/api/main/addCountryData',
   getCountryById : '/api/main/getCountryById',
+  deleteCountryById : '/api/main/deleteCountryById',
 }

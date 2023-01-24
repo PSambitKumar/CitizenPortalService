@@ -17,4 +17,5 @@ public interface MainService {
     Boolean isCountryExist(String body) throws JSONException;
     Country addCountryData(String body);
     Country getCountryById(Long countryId);
+    boolean deleteCountryById(Long countryId);
 }

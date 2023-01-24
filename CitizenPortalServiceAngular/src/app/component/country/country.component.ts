@@ -15,7 +15,7 @@ export class CountryComponent implements OnInit {
   countryList : any = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  editCountryId: any;
+  editCountryId: boolean = false;
 
   constructor(private mainService : MainService, private validateService : ValidationService) { }
 
@@ -92,7 +92,36 @@ export class CountryComponent implements OnInit {
       if (data.statusCode == 200 && data.status == "Success") {
         $('#countryName').val(data.data.countryName);
         $('#countryCode').val(data.data.countryCode);
-        console.log(data.data)
+        if (data.data.active == true) {
+          $('#status').val("true");
+        } else {
+          $('#status').val("false");
+        }
+        this.editCountryId = true;
+      }
+    });
+  }
+
+  deleteCountry(countryId : any) {
+    alert("Country Id : " + countryId);
+    this.mainService.deleteCountryById(countryId, sessionStorage.getItem("apiToken"), sessionStorage.getItem("authToken")).subscribe(data => {
+      if (data.statusCode == 200 && data.status == "Success") {
+        Swal.fire({
+          title: 'Success',
+          text: data.message,
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $('#countryForm').trigger("reset");
+          }
+        });
+      } else if (data.statusCode == 404 && data.status == "Failure") {
+        Swal.fire({
+          title: 'Error',
+          text: data.message,
+          icon: 'error'
+        });
       }
     });
   }

@@ -71,8 +71,8 @@
 
               <div class="col-sm">
                 <div class="col-md-12">
-
-                  <button id="btnSubmit" class="btn btn-primary" type="submit">Submit</button>
+                  <button id="btnSubmit" class="btn btn-primary" type="submit" *ngIf="!editCountryId">Submit</button>
+                  <button id="btnSubmit1" class="btn btn-success" type="submit" *ngIf="editCountryId">Update</button>
                   <button id="btnReset" class="btn btn-warning" type="reset" style="margin-left: 1rem">Reset</button>
                 </div>
               </div>
@@ -115,7 +115,7 @@
                       <td>{{country.isoFullName}}</td>
                       <td>{{country.active}}</td>
                       <td><button type="button" class="btn btn-primary custom-width" (click)="editCountry(country.countryId)"><span class="fa fa-pencil"></span></button>&nbsp;
-                        <button type="button" class="btn btn-danger custom-width"><span class="fa fa-trash"></span></button></td>
+                        <button type="button" class="btn btn-danger custom-width" (click)="deleteCountry(country.countryId)"><span class="fa fa-trash"></span></button></td>
                     </tr>
                     </tbody>
                   </table>

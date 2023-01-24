@@ -136,4 +136,26 @@ public class MainController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/deleteCountryById")
+    public ResponseEntity<?> deleteCountryById(@RequestParam(value = "countryId") Long countryId) {
+        System.out.println("Inside Delete Country By Id Method.");
+        System.out.println("Country Id : " + countryId);
+        Map<String, Object> response = new LinkedHashMap<>();
+        try {
+            if (mainService.deleteCountryById(countryId)) {
+                response.put("statusCode", HttpStatus.OK.value());
+                response.put("status", "Success");
+                response.put("message", "Country Data Deleted Successfully.");
+            } else {
+                response.put("statusCode", HttpStatus.NOT_FOUND.value());
+                response.put("status", "Failure");
+                response.put("message", "Country Data Not Found.");
+            }
+        } catch (Exception e) {
+            response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.put("status", "Failure");
+            response.put("message", e.getMessage());
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

@@ -94,4 +94,14 @@ public class MainServiceImpl implements MainService {
     public Country getCountryById(Long countryId) {
         return countryRepository.findByCountryId(countryId);
     }
+
+    @Override
+    public boolean deleteCountryById(Long countryId) {
+        try {
+            countryRepository.deleteById(countryId);
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
