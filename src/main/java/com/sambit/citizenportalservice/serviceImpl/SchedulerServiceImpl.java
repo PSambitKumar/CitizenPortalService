@@ -4,6 +4,7 @@ import com.sambit.citizenportalservice.model.Country;
 import com.sambit.citizenportalservice.model.District;
 import com.sambit.citizenportalservice.model.State;
 import com.sambit.citizenportalservice.repository.CountryRepository;
+import com.sambit.citizenportalservice.repository.DistrictRepository;
 import com.sambit.citizenportalservice.repository.StateRepository;
 import com.sambit.citizenportalservice.service.SchedulerService;
 import io.jsonwebtoken.Header;
@@ -34,6 +35,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Autowired
     private StateRepository stateRepository;
+
+    @Autowired
+    private DistrictRepository districtRepository;
 
     @Override
     public void fetchCountryDetailsByCountryCodeFromBigDataCloud() {
@@ -177,6 +181,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         HttpHeaders headers;
         HttpEntity<String> header;
         Map<?, ?> response;
+        List<District> districtList = new ArrayList<>();
         try {
             url = resourceBundle.getString("universal.tutorial.generateToken.link");
             restTemplate = new RestTemplate();
@@ -207,14 +212,16 @@ public class SchedulerServiceImpl implements SchedulerService {
                         for (Object cityObject : response1) {
                             System.out.println(((Map<?, ?>) cityObject).get("city_name"));
                             District district = new District();
-                            State state1 = stateRepository.findStateByStateId(Long.parseLong((String) state[1]));
-                            System.out.println("Sate : " + state1);
                             district.setDistrictName((String) ((Map<?, ?>) cityObject).get("city_name"));
+                            district.setState(stateRepository.findStateByStateId(Long.parseLong(state[1].toString())));
                             district.setStatus(true);
+                            System.out.println("District : " + district);
+                            districtList.add(district);
                         }
                     }
                 });
             }
+            districtRepository.saveAll(districtList);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
