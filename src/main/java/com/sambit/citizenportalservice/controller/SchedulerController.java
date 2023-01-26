@@ -57,7 +57,7 @@ public class SchedulerController {
     }
 
 
-    @Scheduled(cron = "0 43 22 * * ?")
+    @Scheduled(cron = "0 0 0 1 1 ?")
     public void fetchDistrictDataListByStateNameFromUniversalTutorial(){
         System.out.println("Inside Fetch District Data List By State Name Method.");
         try {
