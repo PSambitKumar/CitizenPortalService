@@ -12,6 +12,7 @@ export class StateComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   countryList : any = [];
+  stateList : any = [];
 
   constructor(private mainService : MainService) { }
 
@@ -21,7 +22,8 @@ export class StateComponent implements OnInit {
       paging: true,
       searching: true,
     }
-    this.getCountryList()
+    this.getCountryList();
+    this.getStateList()
     this.addState();
   }
 
@@ -39,6 +41,15 @@ export class StateComponent implements OnInit {
     this.mainService.getCountryList(sessionStorage.getItem("apiToken"), sessionStorage.getItem("authToken")).subscribe(data => {
       if (data.statusCode == 200 && data.status == "Success") {
         this.countryList = data.data;
+      }
+    });
+  }
+
+  getStateList() {
+    this.mainService.getStateList(sessionStorage.getItem("apiToken"), sessionStorage.getItem("authToken")).subscribe(data => {
+      console.log(data);
+      if (data.statusCode == 200 && data.status == "Success") {
+        this.stateList = data.data;
         this.dtTrigger.next(null);
       }
     });

@@ -100,25 +100,19 @@
                     <thead style="background: #DDDDDD; color: black; font-weight: bolder; font-size: 18px">
                     <tr>
                       <th>Sl. No</th>
-                      <th>Country Name</th>
-                      <th>Country Code</th>
-                      <th>Currency Name</th>
-                      <th>ISO Full Name</th>
+                      <th>State Name</th>
                       <th>Status</th>
                       <th width="10%">Action</th>
                     </tr>
                     </thead>
 
                     <tbody>
-<!--                    <tr *ngFor="let country of countryList; let i = index" style="font-size:15px">-->
-<!--                      <td>{{i + 1}}</td>-->
-<!--                      <td>{{country.countryName}}</td>-->
-<!--                      <td>{{country.countryCode}}</td>-->
-<!--                      <td>{{country.currencyName}}</td>-->
-<!--                      <td>{{country.isoFullName}}</td>-->
-<!--                      <td>{{country.active}}</td>-->
-<!--                      <td><button type="button" class="btn btn-primary custom-width"><span class="fa fa-pencil"></span></button>&nbsp;-->
-<!--                        <button type="button" class="btn btn-danger custom-width"><span class="fa fa-trash"></span></button></td>-->
+                    <tr *ngFor="let state of stateList; let i = index" style="font-size:15px">
+                      <td>{{i + 1}}</td>
+                      <td>{{state.stateName}}</td>
+                      <td>{{state.active}}</td>
+                      <td><button type="button" class="btn btn-primary custom-width"><span class="fa fa-pencil"></span></button>&nbsp;
+                        <button type="button" class="btn btn-danger custom-width"><span class="fa fa-trash"></span></button></td>
 <!--                    </tr>-->
                     </tbody>
                   </table>

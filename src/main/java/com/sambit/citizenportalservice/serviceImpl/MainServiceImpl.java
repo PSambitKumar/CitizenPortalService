@@ -1,12 +1,10 @@
 package com.sambit.citizenportalservice.serviceImpl;
 
 import com.sambit.citizenportalservice.model.Country;
+import com.sambit.citizenportalservice.model.State;
 import com.sambit.citizenportalservice.model.URL;
 import com.sambit.citizenportalservice.model.URLGroup;
-import com.sambit.citizenportalservice.repository.CountryRepository;
-import com.sambit.citizenportalservice.repository.URLGroupRepository;
-import com.sambit.citizenportalservice.repository.URLRepository;
-import com.sambit.citizenportalservice.repository.UserRepository;
+import com.sambit.citizenportalservice.repository.*;
 import com.sambit.citizenportalservice.service.MainService;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +31,8 @@ public class MainServiceImpl implements MainService {
 
     @Autowired
     private CountryRepository countryRepository;
+    @Autowired
+    private StateRepository stateRepository;
 
     @Override
     public List<Map<String, Object>> getURL(String userId) {
@@ -103,5 +103,10 @@ public class MainServiceImpl implements MainService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<State> getAllStateList() {
+        return stateRepository.findAll();
     }
 }

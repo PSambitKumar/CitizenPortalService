@@ -1,5 +1,7 @@
 package com.sambit.citizenportalservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sambit.citizenportalservice.repository.StateRepository;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -27,6 +29,7 @@ public class State {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "countryId")
     @ToString.Exclude
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Country country;
     @Column(name = "isActive")
     private boolean isActive;

@@ -1,5 +1,6 @@
 package com.sambit.citizenportalservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -46,4 +47,5 @@ public class Country {
     private String region;
     @Column(name = "isActive")
     private boolean isActive;
+
 }

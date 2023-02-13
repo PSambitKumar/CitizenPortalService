@@ -1,6 +1,7 @@
 package com.sambit.citizenportalservice.controller;
 
 import com.sambit.citizenportalservice.model.Country;
+import com.sambit.citizenportalservice.model.State;
 import com.sambit.citizenportalservice.service.MainService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,6 +157,33 @@ public class MainController {
             response.put("status", "Failure");
             response.put("message", e.getMessage());
         }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getAllStateList")
+    public ResponseEntity<?> getAllStateList() {
+        System.out.println("Inside Get All State List Method.");
+        Map<String, Object> response = new LinkedHashMap<>();
+        List<State> stateList;
+        try {
+            stateList = mainService.getAllStateList();
+            System.out.println("State List : " + stateList);
+            if (stateList != null && stateList.size() > 0) {
+                response.put("statusCode", HttpStatus.OK.value());
+                response.put("status", "Success");
+                response.put("message", "State List Fetched Successfully.");
+                response.put("data", stateList);
+            } else {
+                response.put("statusCode", HttpStatus.NOT_FOUND.value());
+                response.put("status", "Failure");
+                response.put("message", "State List Not Found.");
+            }
+        } catch (Exception e) {
+            response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.put("status", "Failure");
+            response.put("message", e.getMessage());
+        }
+        System.out.println("Response : " + response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

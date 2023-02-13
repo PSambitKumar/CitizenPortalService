@@ -103,4 +103,17 @@ export class MainService {
     }
     return this.http.delete<any>(this.baseUrl + urlConfig.deleteCountryById, options);
   }
+
+  getStateList(apiToken : any, authToken : any) : Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      "Authorization": authToken,
+      "Token": apiToken,
+    });
+
+    let options = {
+      headers: headers
+    }
+    return this.http.get<any>(this.baseUrl + urlConfig.getAllStateList, options);
+  }
 }
