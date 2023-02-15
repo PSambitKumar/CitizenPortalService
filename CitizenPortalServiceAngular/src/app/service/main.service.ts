@@ -116,4 +116,55 @@ export class MainService {
     }
     return this.http.get<any>(this.baseUrl + urlConfig.getAllStateList, options);
   }
+
+  getAllDistrictList(apiToken : any, authToken : any) : Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': authToken,
+      'Token': apiToken
+    });
+
+    let options = {
+      headers: headers
+    }
+    return this.http.get<any>(this.baseUrl + urlConfig.getAllDistrictList, options);
+  }
+
+  getStateListByCountryId(apiToken : any, authToken : any, countryId : any) : Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': authToken,
+      'Token': apiToken
+    });
+
+    let options = {
+      headers: headers,
+      params: {
+        "countryId": countryId
+      }
+    }
+    return this.http.get<any>(this.baseUrl + urlConfig.getStateListByCountryId, options);
+  }
+
+  addDistrictData(countryId : any, stateId : any, districtName : any, status : any, apiToken : any, authToken : any) : Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': authToken,
+      'Token': apiToken
+    });
+
+    let body = {
+      countryId : countryId,
+      stateId : stateId,
+      districtName : districtName,
+      status : status
+    }
+
+    let options = {
+      headers: headers,
+      body: body
+    }
+
+    return this.http.post<any>(this.baseUrl + urlConfig.addDistrictData, body, options);
+  }
 }

@@ -27,7 +27,7 @@
               <div class="col-sm">
                 <div class="col-md-12">
                   <label for="countryName" class="form-label">Select Country</label>
-                  <select class="form-control" id="countryName">
+                  <select class="form-control" id="countryName" (change)="getStateList($event)">
                     <option value="0" selected hidden>Select</option>
                     <option *ngFor="let country of countryList" [value]="country.countryId">{{country.countryName}}</option>
                   </select>
@@ -37,9 +37,20 @@
 
               <div class="col-sm">
                 <div class="col-md-12">
-                  <label for="stateName" class="form-label">State Name</label>
-                  <input  type="text" class="form-control" id="stateName" name="stateName" placeholder="Enter State Name">
+                  <label for="stateName" class="form-label">Select State</label>
+                  <select class="form-control" id="stateName">
+                    <option value="0" selected hidden>Select</option>
+                    <option *ngFor="let state of stateList" [value]="state.stateId">{{state.stateName}}</option>
+                  </select>
                   <div id="stateNameAlert" class="custom-alert"></div>
+                </div>
+              </div>
+
+              <div class="col-sm">
+                <div class="col-md-12">
+                  <label for="districtName" class="form-label">District Name</label>
+                  <input class="form-control" type="text" name="districtName"  id="districtName" placeholder="Enter District Name">
+                  <div id="districtNameAlert" class="custom-alert"></div>
                 </div>
               </div>
 
@@ -100,26 +111,20 @@
                     <thead style="background: #DDDDDD; color: black; font-weight: bolder; font-size: 18px">
                     <tr>
                       <th>Sl. No</th>
-                      <th>Country Name</th>
-                      <th>Country Code</th>
-                      <th>Currency Name</th>
-                      <th>ISO Full Name</th>
+                      <th>District Name</th>
                       <th>Status</th>
                       <th width="10%">Action</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    <!--                    <tr *ngFor="let country of countryList; let i = index" style="font-size:15px">-->
-                    <!--                      <td>{{i + 1}}</td>-->
-                    <!--                      <td>{{country.countryName}}</td>-->
-                    <!--                      <td>{{country.countryCode}}</td>-->
-                    <!--                      <td>{{country.currencyName}}</td>-->
-                    <!--                      <td>{{country.isoFullName}}</td>-->
-                    <!--                      <td>{{country.active}}</td>-->
-                    <!--                      <td><button type="button" class="btn btn-primary custom-width"><span class="fa fa-pencil"></span></button>&nbsp;-->
-                    <!--                        <button type="button" class="btn btn-danger custom-width"><span class="fa fa-trash"></span></button></td>-->
-                    <!--                    </tr>-->
+                    <tr *ngFor="let district of districtList; let i = index" style="font-size:15px">
+                      <td>{{i + 1}}</td>
+                      <td>{{district.districtName}}</td>
+                      <td>{{district.active}}</td>
+                      <td><button type="button" class="btn btn-primary custom-width"><span class="fa fa-pencil"></span></button>&nbsp;
+                        <button type="button" class="btn btn-danger custom-width"><span class="fa fa-trash"></span></button></td>
+                    </tr>
                     </tbody>
                   </table>
 
