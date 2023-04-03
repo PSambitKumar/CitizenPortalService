@@ -1,6 +1,7 @@
 package com.sambit.citizenportalservice.service;
 
 import com.sambit.citizenportalservice.model.Country;
+import com.sambit.citizenportalservice.model.District;
 import com.sambit.citizenportalservice.model.State;
 import org.json.JSONException;
 
@@ -20,4 +21,7 @@ public interface MainService {
     Country getCountryById(Long countryId);
     boolean deleteCountryById(Long countryId);
     List<State> getAllStateList();
+    List<District> getAllDistrictList();
+    List<State> getStateListByCountryId(Long countryId);
+    District addDistrictData(String body);
 }

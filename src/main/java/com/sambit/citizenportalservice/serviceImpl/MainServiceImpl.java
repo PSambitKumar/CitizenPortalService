@@ -1,9 +1,6 @@
 package com.sambit.citizenportalservice.serviceImpl;
 
-import com.sambit.citizenportalservice.model.Country;
-import com.sambit.citizenportalservice.model.State;
-import com.sambit.citizenportalservice.model.URL;
-import com.sambit.citizenportalservice.model.URLGroup;
+import com.sambit.citizenportalservice.model.*;
 import com.sambit.citizenportalservice.repository.*;
 import com.sambit.citizenportalservice.service.MainService;
 import org.json.JSONException;
@@ -33,6 +30,8 @@ public class MainServiceImpl implements MainService {
     private CountryRepository countryRepository;
     @Autowired
     private StateRepository stateRepository;
+    @Autowired
+    private DistrictRepository districtRepository;
 
     @Override
     public List<Map<String, Object>> getURL(String userId) {
@@ -108,5 +107,30 @@ public class MainServiceImpl implements MainService {
     @Override
     public List<State> getAllStateList() {
         return stateRepository.findAll();
+    }
+
+    @Override
+    public List<District> getAllDistrictList() {
+        return districtRepository.findAll();
+    }
+
+    @Override
+    public List<State> getStateListByCountryId(Long countryId) {
+        return stateRepository.findAllStatesByCountryId(countryId);
+    }
+
+    @Override
+    public District addDistrictData(String body) {
+        District district = new District();
+        try {
+            JSONObject jsonObject = new JSONObject(body);
+            district.setDistrictName(jsonObject.getString("districtName"));
+            district.setState(stateRepository.getStateByStateId(jsonObject.getLong("stateId")));
+            district.setStatus(jsonObject.getBoolean("status"));
+            district =  districtRepository.save(district);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return district;
     }
 }

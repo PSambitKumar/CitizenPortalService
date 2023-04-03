@@ -62,3 +62,29 @@ public class JWTFilter extends OncePerRequestFilter {
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
+
+
+
+//    Without Using CustomUserDetailsService, Only JWT Token Validation
+//    @Component
+//    public class JwtFilter extends OncePerRequestFilter {
+//
+//        @Autowired
+//        private JwtUtil jwtUtil;
+//
+//        @Override
+//        protected void doFilterInternal(HttpServletRequest httpServletRequest,
+//                                        HttpServletResponse httpServletResponse,
+//                                        FilterChain filterChain) throws ServletException, IOException {
+//
+//            String secretKey = httpServletRequest.getHeader("securityKey");
+//
+//            if (secretKey != null && SecurityContextHolder.getContext().getAuthentication() == null && jwtUtil.validateSecurityKey(secretKey))
+//                SecurityContextHolder.getContext()
+//                        .setAuthentication(new UsernamePasswordAuthenticationToken(jwtUtil.extractUsername(secretKey), null, new ArrayList<>()));
+//            else
+//                SecurityContextHolder.getContext().setAuthentication(null);
+//
+//            filterChain.doFilter(httpServletRequest, httpServletResponse);
+//        }
+//    }

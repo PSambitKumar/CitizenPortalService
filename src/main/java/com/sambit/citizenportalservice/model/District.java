@@ -1,5 +1,6 @@
 package com.sambit.citizenportalservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -26,6 +27,7 @@ public class District {
     private String districtName;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "stateId")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private State state;
     @Column(name = "status")
     private boolean status;

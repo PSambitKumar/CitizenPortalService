@@ -1,11 +1,10 @@
 package com.sambit.citizenportalservice.controller;
 
 import com.sambit.citizenportalservice.model.Country;
+import com.sambit.citizenportalservice.model.District;
 import com.sambit.citizenportalservice.model.State;
 import com.sambit.citizenportalservice.service.MainService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.cdi.Eager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -184,6 +183,82 @@ public class MainController {
             response.put("message", e.getMessage());
         }
         System.out.println("Response : " + response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getAllDistrictList")
+    public ResponseEntity<?> getAllDistrictList(){
+        System.out.println("Inside Get All District List Method.");
+        Map<String, Object> response = new LinkedHashMap<>();
+        List<District> districtList;
+        try {
+            districtList = mainService.getAllDistrictList();
+            if (districtList != null && districtList.size() > 0) {
+                response.put("statusCode", HttpStatus.OK.value());
+                response.put("status", "Success");
+                response.put("message", "District List Fetched Successfully.");
+                response.put("data", districtList);
+            } else {
+                response.put("statusCode", HttpStatus.NOT_FOUND.value());
+                response.put("status", "Failure");
+                response.put("message", "District List Not Found.");
+            }
+        } catch (Exception e) {
+            response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.put("status", "Failure");
+            response.put("message", e.getMessage());
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getStateListByCountryId")
+    public ResponseEntity<?> getStateListByCountryId(@RequestParam(value = "countryId", required = false) Long countryId) {
+        System.out.println("Inside Get State List By Country Id Method.");
+        Map<String, Object> response = new LinkedHashMap<>();
+        List<State> stateList;
+        try {
+            stateList = mainService.getStateListByCountryId(countryId);
+            if (stateList.size() > 0) {
+                response.put("statusCode", HttpStatus.OK.value());
+                response.put("status", "Success");
+                response.put("message", "State List Fetched Successfully.");
+                response.put("data", stateList);
+            } else {
+                response.put("statusCode", HttpStatus.NOT_FOUND.value());
+                response.put("status", "Failure");
+                response.put("message", "No State List Assigned To This Country.");
+            }
+            System.out.println("State List : " + stateList);
+        } catch (Exception e) {
+            response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.put("status", "Failure");
+            response.put("message", e.getMessage());
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/addDistrictData")
+    public ResponseEntity<?> addDistrictData(@RequestBody String body) {
+        System.out.println("Inside Add District Data Method.");
+        Map<String, Object> response = new LinkedHashMap<>();
+        District district;
+        try {
+            district = mainService.addDistrictData(body);
+            if (district.getDistrictId() != null) {
+                response.put("statusCode", HttpStatus.OK.value());
+                response.put("status", "Success");
+                response.put("message", district.getDistrictName() + " Added Successfully.");
+                response.put("data", district);
+            } else {
+                response.put("statusCode", HttpStatus.NOT_FOUND.value());
+                response.put("status", "Failure");
+                response.put("message", "District Data Not Added.");
+            }
+        } catch (Exception e) {
+            response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.put("status", "Failure");
+            response.put("message", e.getMessage());
+        }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
