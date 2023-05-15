@@ -1,0 +1,29 @@
+In a web application, each browser tab operates independently and has its own separate session storage. Therefore, you cannot directly access or remove session storage from one tab in another tab.
+
+However, you can achieve inter-tab communication using the Broadcast Channel API. With this API, you can send messages between different tabs or windows of the same origin. Here's an example of how you can use it to remove session storage in the first tab from a second tab:
+
+First Tab (Sender):
+
+typescript
+Copy code
+const broadcastChannel = new BroadcastChannel('sessionStorageChannel');
+
+// To remove session storage in the first tab
+sessionStorage.clear();
+broadcastChannel.postMessage('removeSessionStorage');
+Second Tab (Receiver):
+
+typescript
+Copy code
+const broadcastChannel = new BroadcastChannel('sessionStorageChannel');
+
+broadcastChannel.onmessage = (event) => {
+  if (event.data === 'removeSessionStorage') {
+    sessionStorage.clear();
+  }
+};
+In the first tab, you can use sessionStorage.clear() to remove all items from the session storage. Then, a message 'removeSessionStorage' is sent using the Broadcast Channel API.
+
+In the second tab, you create a Broadcast Channel with the same channel name ('sessionStorageChannel' in this example). When a message is received, you can check if it matches 'removeSessionStorage' and then clear the session storage using sessionStorage.clear().
+
+Keep in mind that this approach requires both tabs to be open simultaneously, and the second tab must be aware of the first tab's actions through inter-tab communication using the Broadcast Channel API.
